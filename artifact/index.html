@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hebbian vs. KV Bloat</title>
+<meta name="description" content="Interactive exploration of KV-cache memory bloat vs bounded Hebbian memory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-container">
+  <header class="hero">
+    <h1>Hebbian vs. KV Bloat</h1>
+    <div class="claim-box">
+      <p>Transformer inference memory grows <strong>linearly and without bound</strong> with context length because it caches every past token's key/value vectors, while BDH's working memory lives in a <strong>fixed-size synaptic state</strong> updated in place by a local, bounded Hebbian-style rule — trading unbounded storage for a bounded-but-lossy compressed memory.</p>
+      <a href="https://arxiv.org/abs/2509.26507" target="_blank" class="citation-link">Kosowski et al., "The Dragon Hatchling..." (2025)</a>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <section class="panel context-panel">
+      <div class="panel-header">
+        <h2>Context Length</h2>
+        <span class="badge live-badge">Live Compute</span>
+      </div>
+
+      <div class="slider-group">
+        <input type="range" id="context-length" min="0" max="131072" value="0" step="128" class="modern-slider">
+        <div class="slider-labels">
+          <span>0</span>
+          <span id="context-length-val" class="highlight-val">0 tokens</span>
+          <span>128k</span>
+        </div>
+      </div>
+
+      <div class="toggle-container">
+        <label class="toggle-label">
+          <input type="radio" name="mode" value="kv" checked>
+          <span class="toggle-btn">Transformer KV-cache</span>
+        </label>
+        <label class="toggle-label">
+          <input type="radio" name="mode" value="hebbian">
+          <span class="toggle-btn">BDH-style Hebbian state</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel footprint-panel">
+      <h2>Memory Footprint</h2>
+
+      <div class="memory-viz">
+        <div class="memory-track">
+          <div class="memory-label">
+            <span>KV-cache (GiB)</span>
+            <span id="kv-memory" class="mem-value kv-color">0.00 GiB</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill kv-fill" id="kv-bar" style="width: 0%"></div></div>
+        </div>
+
+        <div class="memory-track">
+          <div class="memory-label">
+            <span>Synaptic state (KiB)</span>
+            <span id="hebbian-memory" class="mem-value hebbian-color">8192 KiB</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill hebbian-fill" id="hebbian-bar" style="width: 5%"></div></div>
+        </div>
+      </div>
+
+      <div class="equation-panel">
+        <div class="equation-content" id="equation-display"></div>
+      </div>
+    </section>
+
+    <section class="panel simulation-panel">
+      <div class="panel-header">
+        <h2>Synaptic Matrix Update</h2>
+        <span class="badge warning-badge" title="Simplified pedagogical proxy, not the paper's literal rule.">Simplified Proxy</span>
+      </div>
+
+      <div class="simulation-layout">
+        <div class="canvas-container">
+          <canvas id="neuron-grid" width="300" height="300"></canvas>
+          <div class="canvas-overlay">
+            <span class="norm-label">Frobenius Norm:</span>
+            <span id="norm-val" class="norm-value">0.00</span>
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <div class="control-group">
+            <label for="sparsity">Activation Sparsity <span id="sparsity-val" class="val-num">10%</span></label>
+            <input type="range" id="sparsity" min="1" max="100" value="10" class="modern-slider sm">
+          </div>
+
+          <div class="control-group">
+            <label for="decay">Decay Rate (γ) <span id="decay-val" class="val-num">0.05</span></label>
+            <input type="range" id="decay" min="0" max="0.5" step="0.01" value="0.05" class="modern-slider sm">
+            <div class="helper-text">Set to 0 to see norm diverge (unbounded growth).</div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="step-btn" class="btn primary-btn">Step One Token</button>
+            <button id="run-n-btn" class="btn secondary-btn">Run to Context Length N</button>
+            <button id="reset-btn" class="btn outline-btn">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="disclaimer-text">
+        This visualization illustrates a simplified proxy of the update rule (outer product of sparse activations with exponential decay). Refer to <a href="https://arxiv.org/abs/2509.26507" target="_blank">arXiv:2509.26507, Table 1</a> for the formal "equations of reasoning" and thermodynamic bound statements.
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
