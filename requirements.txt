@@ -1,0 +1,13 @@
+numpy>=2.0.0
+pandas>=2.2.0
+matplotlib>=3.9.0
+plotly>=6.0.0
+scipy>=1.14.0
+jupyter>=1.1.0
+notebook>=7.3.0
+ipykernel>=6.30.0
+
+tqdm>=4.67.0
+networkx>=3.4
+
+pyyaml>=6.0
