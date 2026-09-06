@@ -1,25 +1,102 @@
 # Disclosure
 
-This document states plainly what this project is, what it is not, and what tools were used to build it, so judges, reviewers, and future contributors don't have to infer any of it.
+This document explains the scope of this project, the assumptions made during development, and the tools used to create it. Its purpose is to make the educational intent of the repository clear for reviewers, contributors, and users.
 
-## 1. This is not the Dragon Hatchling (BDH) architecture
+---
 
-Nothing in this repository implements, reproduces, or benchmarks BDH as described in Pathway's paper (arXiv:2509.26507). The Hebbian memory model here is an original, deliberately simplified toy built for pedagogical purposes. Any resemblance to BDH is limited to the single conceptual contrast this project visualizes: fixed-size synaptic memory vs. growing KV-cache memory. See `paper.md` and `limitations.md` for the full boundary between the two.
+## 1. Educational Demonstration
 
-## 2. Synthetic data disclosure
+This repository is an educational visualization of one architectural idea discussed in the paper:
 
-All token activations used in the simulations are randomly generated (`random_sparse_pattern`, fixed seed `42`) and are not derived from real text, a real language model, or any third-party dataset. No claims in this project are based on real language-modeling performance.
+> **The Dragon Hatchling: Linear-Time Transformer Without Attention**  
+> Kosowski et al., 2025  
+> https://arxiv.org/abs/2509.26507
 
-## 3. Estimated, not measured, comparisons
+The project illustrates the conceptual difference between:
 
-The Transformer KV-cache figures shown throughout (notebooks, artifact, and docs) are computed analytically from a hypothetical model shape (`hidden_size=768`, `n_layers=12`), not measured from a running Transformer. They are estimates of theoretical memory footprint, not benchmark results.
+- Transformer KV-cache memory, which grows with sequence length.
+- A bounded Hebbian-style synaptic memory that maintains a fixed-size state.
 
-## 4. Use of AI assistance
+The implementation is intentionally simplified for visualization and learning purposes.
 
-Portions of this project's documentation (`architecture.md`, `design_decisions.md`, `learning_objectives.md`, `limitations.md`, `paper.md`, `citations.md`, this file, and the license files) were drafted with the assistance of Claude (Anthropic), based on the contents of the project's own notebooks and source code, plus a web search used to verify factual claims about the BDH paper. All technical content was derived from the actual notebook outputs and code in this repository; where background research was used (the BDH paper summary in `paper.md`), sources are listed in `citations.md`.
+---
 
-If your hackathon's rules require a specific format or level of detail for AI-assistance disclosure, please adapt this section accordingly — the statement above is a factual account, not a rules-compliant template for any particular competition.
+## 2. Not an Implementation of BDH
 
-## 5. No warranty of scientific validity
+This repository **does not implement, reproduce, benchmark, or validate** the Dragon Hatchling (BDH) architecture.
 
-This project makes no claim to be a validated scientific result. It is an educational artifact built to build intuition about one architectural trade-off. See `limitations.md` for the complete list of simplifications.
+Instead, it contains an original toy Hebbian memory model inspired only by the high-level idea of maintaining a bounded memory state.
+
+None of the algorithms, training procedures, reasoning equations, or performance claims from the paper are reproduced here.
+
+---
+
+## 3. Synthetic Simulation Data
+
+All simulations use synthetic randomly generated sparse activation patterns.
+
+Specifically,
+
+- activations are generated using `random_sparse_pattern()`
+- simulations use a fixed random seed for reproducibility
+- no real text, language model outputs, datasets, or embeddings are used
+
+The visualization is therefore intended only to illustrate qualitative behavior.
+
+---
+
+## 4. Analytical Memory Estimates
+
+The Transformer KV-cache memory shown throughout the project is computed analytically from the standard KV-cache memory equation.
+
+The default visualization assumes:
+
+- hidden size = 768
+- number of layers = 12
+- FP16 (2-byte) precision
+
+These values are configurable and represent theoretical memory requirements rather than measurements from an actual Transformer implementation.
+
+---
+
+## 5. AI-Assisted Development
+
+AI tools were used during the development of this project to assist with:
+
+- documentation drafting
+- code review
+- frontend development
+- JavaScript refactoring
+- UI design suggestions
+- writing explanations
+- improving repository organization
+
+All architecture decisions, implementation choices, educational content, and final verification were performed by the project author.
+
+---
+
+## 6. Scientific Scope
+
+This repository should not be interpreted as scientific evidence supporting or evaluating BDH.
+
+It does **not** provide:
+
+- language-model benchmarks
+- accuracy measurements
+- training results
+- inference speed comparisons
+- empirical validation of BDH
+
+Its purpose is solely to help readers build intuition about the memory trade-off between an unbounded KV-cache and a bounded synaptic memory representation.
+
+---
+
+## 7. Citation
+
+This project cites the BDH paper for background and conceptual motivation only.
+
+No figures, code, datasets, or copyrighted material from the paper are redistributed in this repository.
+
+Please cite and consult the original paper for the formal algorithms and theoretical results.
+
+https://arxiv.org/abs/2509.26507

@@ -1,6 +1,15 @@
 # Third-Party Licenses
 
+This file documents the licenses of third-party software used by this project. It does not change or replace the licenses of those projects.
+
 This project's own code and documentation are licensed under the terms in `LICENSE`. The table below lists the third-party software this project depends on, each of which remains under its own license — nothing here relicenses those projects.
+
+This project is inspired by the paper:
+
+"The Dragon Hatchling: Learning to Reason with Structured Memory"
+(arXiv:2509.26507)
+
+The repository does not redistribute the paper, its figures, or its source code. The paper is cited for academic attribution only. Users should consult the original publication for the complete algorithm, theoretical analysis, and any applicable reuse terms.
 
 | Dependency | Used in | License | License text |
 |---|---|---|---|
