@@ -366,7 +366,7 @@ Everything is implemented using
 ## 1 Clone
 
 ```bash
-git clone https://github.com/<your-username>/<repository>.git
+git clone https://github.com/pnkj006/bdh-vs-kv-cache-artifact.git
 ```
 
 ---
